@@ -53,18 +53,18 @@
                         autoCheckGlobals : false,
                         items       : [
                             {
-                                  url: '/resource/vftest',
+                                  url: '{!URLFOR($Resource.vftest)}',
                                   name : 'New Account with Contacts',
                                   separateContext : true,
                                   hostPageUrl: "/apex/BulkContactEditor"
                             },
                             {
-                                  url: '/resource/recorder',
+                                  url: '{!URLFOR($Resource.recorder)}',
                                   name : 'Using the recorder',
                                   hostPageUrl: "/apex/BulkContactEditor"
                             },
                             {
-                        		url: '/apex/vftest2',
+                        		url: '{!URLFOR($Resource.sch_test)}',
                                 name : 'Testing Ext JS in VisualForce',
 		                        hostPageUrl: "/apex/sch"
                             }
