@@ -1,0 +1,15 @@
+<apex:page standardController="Contact">
+    <apex:pageMessages />
+    <apex:form >
+    	<apex:pageBlock >
+        	<apex:pageBlockSection >
+            	<apex:inputField id="myField" value="{!Contact.FirstName}" html-data-tid="firstName"/>
+               	<apex:inputField value="{!Contact.LastName}" html-data-tid="lastName"/>
+                <apex:inputField value="{!Contact.Email}" html-data-tid="email"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockButtons >
+            	<apex:commandButton action="{!Save}" value="Save" html-data-tid="saveBtn" />
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

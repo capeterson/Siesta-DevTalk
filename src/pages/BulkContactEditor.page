@@ -1,0 +1,61 @@
+<apex:page standardController="Account" extensions="BulkContactEditor" sidebar="false">
+    <apex:form id="frm">
+        <apex:pageMessages />
+        <apex:actionFunction name="delRow" action="{!deleteContact}" status="status" immediate="true" reRender="frm">
+            <apex:param name="rowIndex" value="" assignTo="{!delIndex}" />
+        </apex:actionFunction>
+    	<apex:pageBlock >
+        	<apex:pageBlockSection >
+                <apex:inputField value="{!acct.name}" html-data-tid="input-accountName"/>
+                <apex:inputField value="{!acct.ownerId}" html-data-tid="input-accountOwner"/>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+		<apex:actionstatus id="status">
+            <apex:facet name="start">
+                <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb;
+                       height: 100%;opacity:0.65;width:100%;"> 
+                    <div class="waitingHolder" style="top: 74.2px; width: 91px;">
+                        <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                        <span class="waitingDescription">Loading...</span>
+                    </div>
+                </div>
+            </apex:facet>
+        </apex:actionstatus>
+        <apex:pageBlock >
+            <apex:pageBlockButtons location="bottom">
+            	<apex:commandButton status="status" html-data-tid="newContact" action="{!addContact}" value="Add new Contact" immediate="true" rerender="frm"/>
+                <apex:commandButton status="status" html-data-tid="save" action="{!save}" value="Save"/>
+            </apex:pageBlockButtons>
+        	<apex:pageBlockTable value="{!arrayIndexes}" var="index" rowClasses="contactRow">
+                <apex:column >
+                	<a class="deleteRow">Delete</a>
+                </apex:column>
+                <apex:column >
+                    <apex:facet name="header">{!$ObjectType.Contact.fields.FirstName.Label}</apex:facet>
+                    <apex:inputField value="{!contacts[index].firstName}" html-data-tid="row{!index}-firstName" />
+                </apex:column>
+                <apex:column >
+                    <apex:facet name="header">{!$ObjectType.Contact.fields.LastName.Label}</apex:facet>
+                    <apex:inputField value="{!contacts[index].lastName}" html-data-tid="row{!index}-lastName"/>
+                </apex:column>
+                <apex:column >
+                    <apex:facet name="header">{!$ObjectType.Contact.fields.Title.Label}</apex:facet>
+                    <apex:inputField value="{!contacts[index].title}" html-data-tid="row{!index}-title"/>
+                </apex:column>
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+        <script>
+            var deleteButtons = document.querySelectorAll('.deleteRow');
+            for(var i = 0; i < deleteButtons.length; i++){
+                deleteButtons[i].addEventListener('click', 
+                    function(e){
+                        var myRow = e.path[2].rowIndex-1;
+                        console.log('deleting row',myRow);
+                        delRow(myRow);
+                    }
+                );
+            }
+
+	    </script>
+    </apex:form>
+</apex:page>

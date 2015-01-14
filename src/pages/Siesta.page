@@ -1,0 +1,81 @@
+<apex:page showHeader="false" applyHtmlTag="false" applyBodyTag="false" standardStylesheets="false">
+    <html>
+        <head>
+            <link rel="stylesheet" type="text/css" href="//extjs.cachefly.net/ext-4.2.0-gpl/resources/css/ext-all.css"/>
+            <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.siesta, '/resources/css/siesta-all.css')}"/>
+            
+            <script type="text/javascript" src="//extjs.cachefly.net/ext-4.2.0-gpl/ext-all.js"></script>
+        	<script type="text/javascript" src="{!URLFOR($Resource.siesta, '/siesta-all.js')}"></script>
+            <script type="text/javascript">
+            	
+                var Harness = Siesta.Harness.Browser.ExtJS;
+                Harness.configure({
+                    title       : 'Awesome Test Suite',
+                    recorderConfig : {
+                    	uniqueDomNodeProperty : 'data-tid'    
+                    },
+                    preload     : [
+                        // version of ExtJS used by your application
+                        '//extjs.cachefly.net/ext-4.2.0-gpl/resources/css/ext-all.css',
+                
+                        // version of ExtJS used by your application
+                        '//extjs.cachefly.net/ext/gpl/4.2.0/ext-all.js',
+                    ]
+                });
+                
+                Harness.start(
+                    {
+                        group       : 'Basics',
+                        autoCheckGlobals : false,
+                        
+                        testClass   : Siesta.Test.Browser,
+                        
+                        items       : [
+                            '{!URLFOR($Resource.example, "010-basics/010_basic_assertions.t.js")}',
+                            '{!URLFOR($Resource.example, "010-basics/020_async_code.t.js")}',
+                            
+                            // and object with `url` property and its own "preload" option
+                            {
+                                url : '{!URLFOR($Resource.example, "010-basics/030_global_variables.t.js")}',
+                                name : 'Global variables',  // You can also use the name config if your urls are hard to read
+                                preload : [
+                                    // Jquery CDN
+                                    'http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'
+                                ]
+                            },
+                            '{!URLFOR($Resource.example, "010-basics/040_todo_tests.t.js")}',
+                            '{!URLFOR($Resource.example, "010-basics/050_wait_for.t.js")}',
+                            '{!URLFOR($Resource.example, "010-basics/060_bdd.t.js")}'
+                        ]
+                    },
+                    {
+                        group       : 'Visualforce UI Tests',
+                        autoCheckGlobals : false,
+                        items       : [
+                            {
+                                  url: '/resource/vftest',
+                                  name : 'New Account with Contacts',
+                                  separateContext : true,
+                                  hostPageUrl: "/apex/BulkContactEditor"
+                            },
+                            {
+                                  url: '/resource/recorder',
+                                  name : 'Using the recorder',
+                                  hostPageUrl: "/apex/BulkContactEditor"
+                            },
+                            {
+                        		url: '/apex/vftest2',
+                                name : 'Testing Ext JS in VisualForce',
+		                        hostPageUrl: "/apex/sch"
+                            }
+                        ]
+                    }
+                );
+            </script>
+            
+        </head>
+        <body>
+            
+        </body>
+    </html>
+</apex:page>
